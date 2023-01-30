@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoQuote_generator</title>
+</head>
+
+<body>
+    <div id="quotes">
+        <button>New Quotes</button>
+    </div>
+
+</body>
+
+<script>
+    let maindata = "";
+
+    const getNewQuotes = () => {
+        let ran = Math.floor((Math.random() * 1000) + 1);
+        console.log(ran);
+    }
+
+    const getQuotes = async () => {
+        const api= "https://type.fit/api/quotes";
+        try {
+            let data = await fetch(api);
+            getNewQuotes();
+            // console.log(await data.json());
+        } catch (error) {
+
+        }
+    }
+    getQuotes();
+</script>
+
+</html>
