@@ -5,34 +5,83 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>AutoQuote_generator</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" href="icons8-quote-left-100 (1).png">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 </head>
 
 <body>
-    <div id="quotes">
-        <button>New Quotes</button>
-    </div>
+    <!-- <div id="quotes"></div>
+    <div id="author"></div>
+    <button id="newQ">New Quotes</button>
+    <button id="tweet">tweetme</button> -->
 
+    <div class="container">
+        <div class="inner">
+            <div class="box" data-aos="zoom-in">
+                <p class="number">
+                    <img src="twitter.png" alt="TweetMe" id="tweet">
+                </p>
+
+                <div class="text">
+                    <i class="fa-solid fa-quote-left"></i>
+                    <p id="quotes" class="quotes"></p>
+                    <p id="author" class="author"></p>
+                </div>
+
+                <label class="button" id="newQ">
+                    <p>New Quotes</p>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>Made With <i class="fa-regular fa-heart"></i> by Aniruddh Vaish</p>
+    </div>
 </body>
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-    let maindata = "";
+    AOS.init();
 
+    const quotes = document.getElementById("quotes");
+    const author = document.getElementById("author");
+    const newQ = document.getElementById("newQ");
+    const tweet = document.getElementById("tweet");
+
+    let maindata = "";
+    let ran;
     const getNewQuotes = () => {
-        let ran = Math.floor((Math.random() * 1000) + 1);
-        console.log(ran);
+        ran = Math.floor((Math.random() * 1000) + 1);
+        quotes.innerText = `${maindata[ran].text}`;
+        if (maindata[ran].author == null)
+            author.innerText = "-By Unknown";
+        else
+            author.innerText = `-By ${maindata[ran].author}`;
+    }
+
+    const tweetNow = () => {
+        let tpost = `https://twitter.com/intent/tweet?text=${maindata[ran].text}  -By ${maindata[ran].author}`;
+        window.open(tpost);
     }
 
     const getQuotes = async () => {
-        const api= "https://type.fit/api/quotes";
+        const api = "https://type.fit/api/quotes";
         try {
             let data = await fetch(api);
+            maindata = await data.json()
             getNewQuotes();
-            // console.log(await data.json());
         } catch (error) {
 
         }
     }
+    tweet.addEventListener("click", tweetNow)
+    newQ.addEventListener("click", getNewQuotes);
     getQuotes();
 </script>
 
