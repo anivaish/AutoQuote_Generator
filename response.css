@@ -12,5 +12,5 @@
     height: 80%;
 }
 .button{
-    position: sticky;
+    position: absolute;
 }
